@@ -1,16 +1,15 @@
-from app.controllers import application
 
-class ServiceOrder(order):
+class ServiceOrder():
     def __init__(self, id, client_name, vehicle_model, date, contact_phone, service_description, time, notes):
         self._id = id
 
-        self._client_name = client_name
-        self._vehicle_model = vehicle_model
-        self._date = date
-        self._contact_phone = contact_phone
-        self._service_description = service_description
-        self._time = time
-        self._notes = notes
+        self.client_name = client_name
+        self.vehicle_model = vehicle_model
+        self.date = date
+        self.contact_phone = contact_phone
+        self.service_description = service_description
+        self.time = time
+        self.notes = notes
     
     @property
     def id(self):
@@ -50,7 +49,7 @@ class ServiceOrder(order):
     
     @property
     def contact_phone(self):
-        return self._client_name
+        return self._contact_phone
     
     @contact_phone.setter
     def contact_phone(self, value: str):

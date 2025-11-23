@@ -25,6 +25,10 @@ def helper(info= None):
 @app.route('/oficina', methods=['GET'])
 def action_oficina():
     return ctl.render('oficina')
+
+@app.route('/create_order', method='POST')
+def action_create_order():
+    return ctl.create_order()
 #-----------------------------------------------------------------------------
 
 
