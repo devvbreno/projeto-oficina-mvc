@@ -1,0 +1,437 @@
+/* --- Variáveis de Cores (Baseado na sua Logo) --- */
+:root {
+    --primary-blue: #0d47a1;
+    --secondary-blue: #1a237e;
+    --accent-blue: #42a5f5;
+    --text-dark: #333;
+    --text-light: #f4f4f4;
+    --bg-light: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(0, 0, 0, 0.15);
+    
+    /* Cores de Status da Tabela */
+    --color-available-bg: #e8f5e9; /* Verde claro */
+    --color-available-text: #2e7d32; /* Verde escuro */
+    --color-booked-bg: #ffebee;     /* Vermelho claro */
+    --color-booked-text: #c62828;     /* Vermelho escuro */
+    --color-lunch-bg: #fffde7;      /* Amarelo claro */
+    --color-lunch-text: #795548;      /* Marrom */
+    --color-closed-bg: #eceff1;     /* Cinza claro */
+    --color-closed-text: #78909c;     /* Cinza */
+}
+
+/* --- Base Global e Fundo --- */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+    line-height: 1.6;
+    /* Imagem de fundo da oficina, com overlay */
+    background: url('/static/img/fundo-oficina.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+/* Overlay para escurecer o fundo e destacar o conteúdo */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: -1; /* Fica atrás de todo o conteúdo */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+h1, h2, h3 {
+    color: var(--primary-blue);
+    margin-top: 0;
+    font-weight: 700;
+}
+h2 { font-size: 2.2rem; }
+h3 { font-size: 1.6rem; }
+
+/* --- Cabeçalho --- */
+header {
+    background-color: var(--bg-light);
+    padding: 15px 0;
+    box-shadow: 0 3px 10px var(--shadow-light);
+    position: sticky; /* Fixa o cabeçalho no topo */
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+    vertical-align: middle;
+}
+
+header nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+header nav li {
+    margin-left: 30px;
+}
+
+header nav a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+header nav a:hover {
+    color: var(--secondary-blue);
+    background-color: #f0f0f0;
+}
+
+/* Estilo do link da aba ativa */
+header nav a.active {
+    color: var(--secondary-blue);
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-blue);
+}
+
+/* --- Botões --- */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Lógica das Abas de Conteúdo --- */
+main {
+    padding: 40px 0;
+}
+
+.content-section {
+    display: none; /* Esconde todas as seções por padrão */
+    background-color: var(--bg-light);
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Mostra apenas a seção ativa */
+.content-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.content-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.content-section h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--primary-blue);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* --- Formulário de Agendamento --- */
+#agendamento-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 25px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group.half-width {
+    grid-column: span 1; /* Ocupa uma coluna */
+}
+
+.form-group.full-width,
+.btn-primary.full-width,
+#form-message-wrapper.full-width {
+    grid-column: 1 / -1; /* Ocupa as duas colunas */
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: var(--secondary-blue);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fcfcfc;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.2);
+}
+
+/* Estilo para inputs desabilitados (Domingo) */
+.form-group input:disabled {
+    background-color: #f1f1f1;
+    cursor: not-allowed;
+    color: #999;
+}
+
+/* Mensagem de status do formulário */
+#form-message {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: -10px; /* Puxa para mais perto dos campos de data/hora */
+}
+#form-message.status-info {
+    color: #31708f;
+    background-color: #d9edf7;
+}
+#form-message.status-ok {
+    color: var(--color-available-text);
+    background-color: var(--color-available-bg);
+}
+#form-message.status-error {
+    color: var(--color-booked-text);
+    background-color: var(--color-booked-bg);
+}
+
+
+/* Divisor */
+.section-divider {
+    border: 0;
+    height: 1px;
+    background: var(--border-color);
+    margin: 50px 0;
+}
+
+/* --- Tabela de Horários (NOVO ESTILO) --- */
+.schedule-table {
+    overflow: hidden; /* Para o border-radius funcionar na tabela */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    border: 1px solid var(--border-color);
+}
+
+.schedule-table table {
+    width: 100%;
+    border-collapse: collapse; /* Remove espaço entre células */
+}
+
+.schedule-table th {
+    background-color: #f8f9fa;
+    color: var(--secondary-blue);
+    padding: 15px;
+    text-align: left;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.schedule-table td {
+    border: none; /* Remove bordas de todos os lados */
+    border-bottom: 1px solid var(--border-color); /* Adiciona só a de baixo */
+    padding: 14px 15px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease;
+}
+
+.schedule-table tr:last-child td {
+    border-bottom: none; /* Remove a borda da última linha */
+}
+
+.schedule-table td:first-child {
+    /* Estilo para a coluna de Horário */
+    text-align: left;
+    font-weight: 700;
+    color: var(--text-dark);
+    background-color: #fdfdfd;
+}
+
+/* Células de Status */
+.schedule-table td.available {
+    background-color: var(--color-available-bg);
+    color: var(--color-available-text);
+}
+.schedule-table td.booked {
+    background-color: var(--color-booked-bg);
+    color: var(--color-booked-text);
+}
+.schedule-table td.lunch {
+    background-color: var(--color-lunch-bg);
+    color: var(--color-lunch-text);
+    font-style: italic;
+    font-weight: 500;
+}
+.schedule-table td.closed {
+    background-color: var(--color-closed-bg);
+    color: var(--color-closed-text);
+    font-weight: 500;
+}
+
+
+/* --- Grid de Produtos (Aba Produtos) --- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.product-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px var(--shadow-light);
+}
+
+.product-item h3 {
+    color: var(--secondary-blue);
+    font-size: 1.4rem;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+.product-item p {
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+/* Placeholder para imagens */
+.img-placeholder {
+    width: 100%;
+    height: 150px;
+    background-color: #e0e0e0;
+    color: #757575;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* --- Rodapé --- */
+footer {
+    background-color: var(--primary-blue);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 50px;
+    font-size: 0.95rem;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    position: relative; /* Garante que fique acima do overlay do body */
+    z-index: 10;
+}
+
+footer p {
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 900px) {
+    #agendamento-form {
+        grid-template-columns: 1fr; /* Coluna única em telas menores */
+    }
+    .form-group.half-width {
+        grid-column: span 1; /* Ocupa coluna inteira */
+    }
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    header nav ul {
+        margin-top: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    header nav li {
+        margin: 5px 10px;
+    }
+    .schedule-table {
+        /* Permite scroll horizontal em telas pequenas */
+        overflow-x: auto;
+    }
+    .schedule-table table {
+        min-width: 700px; /* Força a tabela a ter um tamanho mínimo */
+    }
+}
