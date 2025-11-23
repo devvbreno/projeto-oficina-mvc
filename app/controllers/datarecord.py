@@ -48,3 +48,16 @@ class DataRecord():
 
     def get_all_orders(self):
         return self.__orders
+    
+    def delete_order(self, id_to_delete):
+        order_founded = None
+        for ordem in self.__orders:
+            if ordem.id == id_to_delete:
+                order_founded = ordem
+                break
+        
+        if order_founded:
+            self.__orders.remove(order_founded)
+            self.save_to_json()
+            return True 
+        return False
