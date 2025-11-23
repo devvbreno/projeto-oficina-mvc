@@ -9,7 +9,7 @@ class ServiceOrder():
         self.contact_phone = contact_phone
         self.service_description = service_description
         self.time = time
-        self.notes = notes
+        self._notes = notes
     
     @property
     def id(self):
