@@ -1,12 +1,12 @@
 from bottle import template, request, redirect
 from app.models.service_order import ServiceOrder
-from app.controllers.db import 
+from app.controllers.datarecord import DataRecord
 class Application():
 
     def __init__(self):
         self.pages = {
             'helper': self.helper,
-            'oficina': self.home_ofina
+            'oficina': self.home_oficina
         }
         self.__model = DataRecord()
 
@@ -18,8 +18,9 @@ class Application():
     def helper(self):
         return template('app/views/html/helper')
 
-    def home_ofina(self):
-        return template('app/views/html/home_oficina', error_message = None)
+    def home_oficina(self):
+        list_orders = self.__model.get_all_orders()
+        return template('app/views/html/home_oficina', error_message = None, orders = list_orders)
     
     def create_order(self):
 
@@ -47,4 +48,5 @@ class Application():
             return redirect('/oficina')
         
         except ValueError as e:
-            return template('app/views/html/home_oficina', error_message=str(e))
+            list_orders = self.__model.get_all_orders()
+            return template('app/views/html/home_oficina', error_message=str(e), orders = list_orders)

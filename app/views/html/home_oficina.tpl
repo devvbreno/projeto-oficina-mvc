@@ -28,9 +28,14 @@
         
         <section id="agendamento" class="content-section active">
             <h2>Faça seu Agendamento</h2>
+            % if defined('error_message') and error_message:
+                <div class="alert-error" style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px; border-radius: 4px;">
+                <strong>Erro:</strong> {{error_message}}
+                </div>
+            % end
             <p>Preencha o formulário e verifique os horários disponíveis na tabela abaixo.</p>
             
-            <form id="agendamento-form">
+            <form id="agendamento-form" action="/create_order" method="POST">
                 <div class="form-group">
                     <label for="nome">Nome Completo:</label>
                     <input type="text" id="nome" name="nome" required placeholder="Seu nome">
@@ -314,7 +319,38 @@
         </section>
 
     </main>
-
+    <section class="content-section" style="margin-top: 40px;">
+        <h2>Ordens Registradas no Sistema</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Veículo</th>
+                    <th>Serviço</th>
+                    <th>Data</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                % for ordem in orders:
+                <tr>
+                    <td>{{ordem.id}}</td>
+                    <td>{{ordem.client_name}}</td>
+                    <td>{{ordem.vehicle_model}}</td>
+                    <td>{{ordem.service_description}}</td>
+                    <td>{{ordem.date}}</td>
+                    <td>
+                        <form action="/delete_order" method="POST">
+                            <input type="hidden" name="id" value="{{ordem.id}}">
+                            <button type="submit" style="color: red;">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                % end
+            </tbody>
+        </table>
+    </section>
     <footer>
         <div class="container">
             <p>&copy; 2025 TopCar Centro Automotivo. Todos os direitos reservados.</p>

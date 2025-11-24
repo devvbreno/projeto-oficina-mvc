@@ -29,6 +29,12 @@ def action_oficina():
 @app.route('/create_order', method='POST')
 def action_create_order():
     return ctl.create_order()
+
+@app.route('/delete_order', method='POST')
+def action_delete_order():
+    id_to_delete = request.forms.get('id')
+    return ctl.delete_order(id_to_delete)
+
 #-----------------------------------------------------------------------------
 
 
