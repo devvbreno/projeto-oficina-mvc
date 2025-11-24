@@ -11,8 +11,8 @@ class Application():
         self.__model = DataRecord()
 
     def render(self,page):
-       content = self.pages.get(page, self.helper)
-       return content()
+        content = self.pages.get(page, self.helper)
+        return content()
 
 
     def helper(self):
@@ -47,6 +47,14 @@ class Application():
             self.__model.create_order(new_order)
             return redirect('/oficina')
         
-        except ValueError as e:
+        except Exception as e:
             list_orders = self.__model.get_all_orders()
             return template('app/views/html/home_oficina', error_message=str(e), orders = list_orders)
+        
+        def delete_order(self, id_to_delete):
+            try:
+                self.__model.delete_order(int(id_to_delete))
+            except (ValueError, TypeError):
+                pass
+            
+            return redirect('/oficina')

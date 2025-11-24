@@ -71,10 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LÓGICA DE ENVIO DO FORMULÁRIO ---
     agendamentoForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Previne o envio real
 
         // Verifica se a hora está desabilitada (Domingo)
         if (horaInput.disabled) {
+            event.preventDefault();
+            
             setFormMessage('Por favor, selecione uma data válida (Segunda a Sábado).', 'error');
             return;
         }
@@ -83,10 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = dataInput.value;
         
         // Simulação de envio
-        alert(`✅ Agendamento Confirmado!\n\nOlá, ${nome}!\nSeu serviço foi pré-agendado para ${data}. Entraremos em contato em breve para confirmar.`);
 
         // Limpa o formulário e reseta a mensagem
-        agendamentoForm.reset();
         horaInput.disabled = false;
         setFormMessage('Selecione uma data para ver os horários.', 'info');
     });
