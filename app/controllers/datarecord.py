@@ -27,7 +27,7 @@ class DataRecord():
             order._id = len(self.__orders) + 1
         self.__orders.append(order)
         self.save_to_json()
-
+    
     def save_to_json(self):
         list_dicionary = []
         for ordem in self.__orders:

@@ -357,7 +357,7 @@
             <p>Rua das Peças, 123 - Bairro dos Motores - Sua Cidade/UF | Telefone: (XX) XXXX-XXXX</p>
         </div>
     </footer>
-    
-    <script src="/static/js/oficina.js"></script>
+        
+
 </body>
 </html>

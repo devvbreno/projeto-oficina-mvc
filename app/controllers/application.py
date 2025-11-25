@@ -51,10 +51,10 @@ class Application():
             list_orders = self.__model.get_all_orders()
             return template('app/views/html/home_oficina', error_message=str(e), orders = list_orders)
         
-        def delete_order(self, id_to_delete):
-            try:
-                self.__model.delete_order(int(id_to_delete))
-            except (ValueError, TypeError):
-                pass
+    def delete_order(self, id_to_delete):
+        try:
+            self.__model.delete_order(int(id_to_delete))
+        except (ValueError, TypeError):
+            pass
             
-            return redirect('/oficina')
+        return redirect('/oficina')
