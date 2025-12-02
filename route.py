@@ -35,6 +35,18 @@ def action_delete_order():
     id_to_delete = request.forms.get('id')
     return ctl.delete_order(id_to_delete)
 
+@app.route('/login', method='GET')
+def action_login_view():
+    return ctl.render('login')
+
+@app.route('/login', method='POST')
+def action_login_post():
+    return ctl.authenticate_user()
+
+@app.route('/logout', method='POST')
+def action_logout():
+    return ctl.logout_user()
+
 #-----------------------------------------------------------------------------
 
 
