@@ -12,13 +12,24 @@
     <header>
         <div class="container header-content">
             <div class="logo">
-                <img src="/static/img/logo-topcar.png" alt="Logo TopCar" style="height: 50px;">
+                <h2 style="color: white; display: flex; align-items: center; gap: 10px;">
+                    <img src="/static/img/logo-topcar.png" alt="Logo" style="height: 40px;"> 
+                    TopCar
+                </h2>
             </div>
             <nav>
                 <ul>
                     <li><a href="#" class="nav-link active" data-target="agendamento">Agendamentos</a></li>
                     <li><a href="#" class="nav-link" data-target="produtos">Produtos</a></li>
                     <li><a href="#" class="nav-link" data-target="sobre">Sobre Nós</a></li>
+                    
+                    <li>
+                        <form action="/logout" method="POST" style="display: inline;">
+                            <button type="submit" class="btn-logout" title="Sair do Sistema">
+                                Sair 🚪
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </nav>
         </div>
