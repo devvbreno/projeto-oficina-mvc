@@ -1,28 +1,25 @@
+import eventlet
+eventlet.monkey_patch()
+
 from app.controllers.application import Application
-from bottle import Bottle, route, run, request, static_file
-from bottle import redirect, template, response
+from bottle import Bottle, static_file, request, debug
+import socketio
 
-
+sio = socketio.Server(async_mode='eventlet')
 app = Bottle()
-ctl = Application()
+app_with_socket = socketio.WSGIApp(sio, app)
+ctl = Application(sio)
 
-
-#-----------------------------------------------------------------------------
-# Rotas:
-
+# Rotas Normais (HTTP)
 @app.route('/static/<filepath:path>')
 def serve_static(filepath):
     return static_file(filepath, root='./app/static')
 
 @app.route('/helper')
-def helper(info= None):
+def helper():
     return ctl.render('helper')
 
-
-#-----------------------------------------------------------------------------
-# Suas rotas aqui:
-
-@app.route('/oficina', methods=['GET'])
+@app.route('/oficina', method='GET')
 def action_oficina():
     return ctl.render('oficina')
 
@@ -35,6 +32,7 @@ def action_delete_order():
     id_to_delete = request.forms.get('id')
     return ctl.delete_order(id_to_delete)
 
+# Rotas de Login 
 @app.route('/login', method='GET')
 def action_login_view():
     return ctl.render('login')
@@ -47,9 +45,19 @@ def action_login_post():
 def action_logout():
     return ctl.logout_user()
 
-#-----------------------------------------------------------------------------
+# Eventos de Websocket 
+@sio.event
+def connect(sid, environ):
+    print(f'[SocketIO] Novo navegador conectado: {sid}')
+
+@sio.event
+def disconnect(sid):
+    print(f'[SocketIO] Navegador desconectado: {sid}')
 
 
 if __name__ == '__main__':
+    print("Iniciando servidor com suporte a Websocket na porta 8080...")
+    
+    debug(True)
 
-    run(app, host='0.0.0.0', port=8080, debug=True)
+    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 8080)), app_with_socket)

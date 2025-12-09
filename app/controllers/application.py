@@ -3,18 +3,18 @@ from app.models.service_order import ServiceOrder
 from app.controllers.datarecord import DataRecord
 class Application():
 
-    def __init__(self):
+    def __init__(self, sio):
         self.pages = {
             'helper': self.helper,
             'oficina': self.home_oficina,
             'login' : self.login 
         }
         self.__model = DataRecord()
+        self.sio = sio
 
     def render(self,page):
         content = self.pages.get(page, self.helper)
         return content()
-
 
     def helper(self):
         return template('app/views/html/helper')
@@ -53,12 +53,13 @@ class Application():
                 notes= notess
             )   
             self.__model.create_order(new_order)
-            return redirect('/oficina')
+            print("[SocketIO] Evento de atualização...")
+            self.sio.emit('update_table')
         
         except Exception as e:
             list_orders = self.__model.get_all_orders()
             return template('app/views/html/home_oficina', error_message=str(e), orders = list_orders)
-        
+        return redirect('/oficina')
     def delete_order(self, id_to_delete):
         session_id = request.get_cookie('session_id')
         if not self.__model.get_username(session_id):
@@ -66,8 +67,11 @@ class Application():
         
         try:
             self.__model.delete_order(int(id_to_delete))
+            print("[SocketIO] Item deletado. Emitir Atualização...")
+            self.sio.emit('update_table')
         except (ValueError, TypeError):
             pass
+        return redirect('/oficina')
             
     def login(self):
         session_id = request.get_cookie('session_id')

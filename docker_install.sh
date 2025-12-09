@@ -2,7 +2,7 @@
 
 # Script para instalar Docker e Vim no Ubuntu 20.04
 
-# Verificar se o script está sendo executado como root
+# Verificar se o script está sendo executado como root (administrador)
 if [[ $EUID -ne 0 ]]; then
    echo "Este script precisa ser executado com permissões de superusuário (sudo)." 
    exit 1

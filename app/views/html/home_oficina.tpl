@@ -188,6 +188,8 @@
         <p>&copy; 2025 TopCar Centro Automotivo - Sistema BMVC</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+
     <script src="/static/js/oficina.js"></script>
 </body>
 </html>
